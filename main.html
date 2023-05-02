@@ -13,21 +13,101 @@
             flex-direction: column;
             height: 2000px;
         }
+        
+        /* header */
         nav{
             top: 0;
         }
-        nav div{
+        nav div:first-child{
             display: flex;
             gap: 10px;
         }
-        nav div:last-child{
+        nav .main-nav{
             margin-right: 50px;
+            gap: 10px;
         }
-        nav div:nth-child(1) a{width: unset;height: unset;}
+        #meau-switch {
+            display: none;
+        }
+        @media screen and (width < 768px) {
+            .hb {
+                width: 40px;
+                height: 40px;
+                background-color: #000;
+                display: flex;
+                flex-direction: column;
+                flex-wrap: wrap;
+                justify-content: space-evenly;
+                align-content: center;
+            }
+            .hb span {
+                width: 80%;
+                height: 2px;
+                background-color: #fff;
+            }
+            .main-nav {
+                display: none;
+                position: absolute;
+                left: 0;
+                top: 100%;
+                width: 100%;
+            }
+            .main-nav a{
+                display: block;
+                border-radius: 0;
+            }
+            .main-nav a+a {
+                border-top: 1px solid #fff;
+            }
+            #meau-switch:checked~.navbar .main-nav {
+                display: block;
+            }
+        }
+        @media screen and (width >=768px) {
+            .hb {
+                display: none;
+            }
+            .main-nav {
+                display: flex;
+            }
+        }
+        
+        /* main */
         .main{
             flex-grow: 1;
             background-color: aqua;
         }
+        .main .main-wh{
+            width: 80%;
+            margin:auto;
+            padding: 20px 0;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .main-wh nav{
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .main .search{
+            display: flex;
+            justify-content: center;
+        }
+        .main .search button{
+            width: 60px;
+        }
+        .main #search-content{
+            height: 300px;
+            background-color: lightblue;
+        }
+        .main #proposal{
+            flex-grow: 1;
+            background-color: aquamarine;
+        }
+        
+        /* footer */
         .end{
             height: 400px;
             display: flex;
@@ -49,6 +129,7 @@
     </style>
 </head>
 <body>
+    <input type="checkbox" id="meau-switch">
     <nav class="navbar sticky-top navbar-dark bg-dark">
         <!-- Navbar content -->
         <div>
@@ -56,7 +137,12 @@
             <a href="#"><h1>校園政策平台網</h1></a>
         </div>
 
-        <div>
+        <label for="meau-switch" class="hb">
+            <span></span>
+            <span></span>
+            <span></span>
+        </label>
+        <div class="main-nav">
             <a class="btn btn-primary" href="#" role="button">首頁</a>
             <a class="btn btn-primary" href="#" role="button">提案</a>
             <a class="btn btn-primary" href="#" role="button">監督</a>
@@ -64,8 +150,23 @@
         </div>
     </nav>
 
-    <div class="main"></div>
+    <div class="main">
+        <div class="main-wh">
+            <nav>
+                <div class="search">
+                    <input class="form-control" type="text" placeholder="請輸入關鍵字">
+                    <button type="button" class="btn btn-secondary btn-sm">搜尋</button>
+                </div>
+                <div id="search-content">
 
+                </div>
+            </nav>
+            <div id="proposal">
+
+            </div>
+        </div>
+    </div>
+        
     <div class="end">
         <div class="tal">
             <div>
@@ -86,5 +187,13 @@
         <div class="a">上半部超連結</div>
         <div class="a">往網站介紹連結</div>
     </div>
+
+    <script>
+        let url = "/propose.json";
+
+        window.onload = function(){
+
+        }
+    </script>
 </body>
 </html>
