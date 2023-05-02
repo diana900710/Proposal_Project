@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <title>Document</title>
+    <style>
+        *{margin: 0;padding: 0;}
+        body{
+            display: flex;
+            flex-direction: column;
+            height: 2000px;
+        }
+        nav{
+            top: 0;
+        }
+        nav div{
+            display: flex;
+            gap: 10px;
+        }
+        nav div:last-child{
+            margin-right: 50px;
+        }
+        nav div:nth-child(1) a{width: unset;height: unset;}
+        .main{
+            flex-grow: 1;
+            background-color: aqua;
+        }
+        .end{
+            height: 400px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 50px;
+            background-color: #000;
+            color: #fff;
+        }
+        .end div{
+            height: 80%;
+        }
+        .end .tal{
+            width: 350px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar sticky-top navbar-dark bg-dark">
+        <!-- Navbar content -->
+        <div>
+            <a href="#"><img src="https://picsum.photos/50/50/?random=10"></a>
+            <a href="#"><h1>校園政策平台網</h1></a>
+        </div>
+
+        <div>
+            <a class="btn btn-primary" href="#" role="button">首頁</a>
+            <a class="btn btn-primary" href="#" role="button">提案</a>
+            <a class="btn btn-primary" href="#" role="button">監督</a>
+            <a class="btn btn-primary" href="#" role="button">各處室</a>
+        </div>
+    </nav>
+
+    <div class="main"></div>
+
+    <div class="end">
+        <div class="tal">
+            <div>
+                <h4>聯絡資訊</h4>
+                <h5>
+                    30012 新竹市香山區五福路二段707號<br>
+                    707, Sec.2, WuFu Rd., Hsinchu, Taiwan 30012, R.O.C. 電話：03-5374281~5 傳真：03-5373771
+                </h5>
+            </div>
+            <div>
+                <h4>緊急聯絡</h4>
+                <h5>
+                    校園安全專線：0972590728 (全日)<br>
+                    學生宿舍專線：03-5376000,<br>03-5375015
+                </h5>
+            </div>
+        </div>
+        <div class="a">上半部超連結</div>
+        <div class="a">往網站介紹連結</div>
+    </div>
+</body>
+</html>
