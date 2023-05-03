@@ -1,0 +1,21 @@
+
+.main-wh nav{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.main .search{
+    display: flex;
+    justify-content: center;
+}
+.main .search button{
+    width: 60px;
+}
+.main #search-content{
+    height: 300px;
+    background-color: lightblue;
+}
+.main #proposal{
+    flex-grow: 1;
+    background-color: aquamarine;
+}
