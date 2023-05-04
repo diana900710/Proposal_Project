@@ -1,21 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+        integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
     <title>Document</title>
     <link rel="stylesheet" href="propose.css">
     <link rel="stylesheet" href="home.css">
 </head>
+
 <body>
     <input type="checkbox" id="meau-switch">
     <nav class="navbar sticky-top navbar-dark bg-dark">
         <!-- Navbar content -->
         <div>
             <a href="/main.html"><img src="https://picsum.photos/50/50/?random=10"></a>
-            <a href="/main.html"><h1>校園政策平台網</h1></a>
+            <a href="/main.html">
+                <h1>校園政策平台網</h1>
+            </a>
         </div>
 
         <label for="meau-switch" class="hb">
@@ -47,7 +52,7 @@
             </div>
         </div>
     </div>
-        
+
     <div class="end">
         <div class="tal">
             <div>
@@ -69,12 +74,108 @@
         <div class="a">往網站介紹連結</div>
     </div>
 
+    <script src="https://code.jquery.com/jquery-3.6.4.js"
+        integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous"></script>
+
     <script>
         let url = "/propose.json";
 
-        window.onload = function(){
+        let main = document.getElementById("proposal");
+        window.onload = function () {
+            requestJson();
 
         }
+        let ipadArray = [];
+        let num = 1;
+
+
+        let xhr = new XMLHttpRequest();
+        function requestJson() {
+            xhr.onload = function () {
+                ipadArray = this.response;
+
+                ipadArray.forEach((item, index) => {
+                    if (index < 8*(num-1) || index >= 8*num) {
+                        return;
+                    }
+                    //card
+                    let div = document.createElement("div");
+                    //card-content
+                    let div2 = document.createElement("div");
+                    //card-icon
+                    let img = document.createElement("img");
+                    //card-title
+                    let h3 = document.createElement("h3");
+                    //contect-nav
+                    let nav = document.createElement("nav");
+                    //agree
+                    let p = document.createElement("p");
+                    //message
+                    let p2 = document.createElement("p");
+
+                    cardSetStyle(); //card-Set style
+
+                    h3.innerHTML = `<h3>${item.title}</h3>`;
+                    p.innerHTML = `同意數: ${item.agree}`;
+                    p2.innerHTML = `留言數: ${item.message}`;
+
+                    div.append(img);
+
+                    div2.append(h3);
+
+                    nav.append(p);
+                    nav.append(p2);
+                    div2.append(nav);
+
+                    div.append(div2);
+
+                    main.append(div);
+
+                    function cardSetStyle() {
+                        div.className = "maincard";
+                        img.src = "https://picsum.photos/200/200/?random=10";
+                        img.style.height = "90%";
+                        nav.style.flexDirection = "row";
+                    }
+
+
+                });
+
+                page();
+
+                function page() {
+                    let div = document.createElement("div");
+                    div.className = "page";
+                    for (var i = 0; i < Math.ceil(ipadArray.length / 8); i++) {
+                        let a = document.createElement("a");
+                        a.className = "btn btn-link";
+                        a.href = "#";
+                        a.innerText = i + 1;
+                        a.id = `page${i + 1}`;
+                        div.append(a);
+
+                    }
+                    main.append(div);
+                }
+
+                for (var i = 0; i < Math.ceil(ipadArray.length / 8); i++) {
+                    
+                    let page = document.getElementById(`page${i+1}`);
+                    // console.log(i);
+                    $(`#page${i+1}`).click(function(){
+                        main.innerHTML = "";
+                        requestJson();
+                        num = page.innerText;
+                        console.log(num);
+                    })
+                }
+            }
+            xhr.open("GET", url);
+            xhr.responseType = "json";
+            xhr.send();
+        }
     </script>
+
 </body>
+
 </html>

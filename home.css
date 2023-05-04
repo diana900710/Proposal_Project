@@ -16,6 +16,40 @@
     background-color: lightblue;
 }
 .main #proposal{
-    flex-grow: 1;
+    /* flex-grow: 1; */
     background-color: aquamarine;
+    display: flex;
+    align-content: flex-start;
+    flex-wrap: wrap;
+}
+#proposal .maincard{
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+    padding: 0 20px;
+    gap: 20px;
+    width: 50%;
+    height: 230px;
+}
+.maincard div{
+    flex-grow: 1;
+}
+.page{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+.page a{
+    font-size: 24px;
+}
+@media screen and (width < 768px) {
+    #proposal .maincard{
+        width: 100%;
+        justify-content: center;
+    }
+    .maincard div{
+        flex-grow: unset;
+    }
 }
