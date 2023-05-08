@@ -98,6 +98,7 @@
                     if (index < 8*(num-1) || index >= 8*num) {
                         return;
                     }
+                    let a = document.createElement("a");
                     //card
                     let div = document.createElement("div");
                     //card-content
@@ -128,12 +129,15 @@
                     div2.append(nav);
 
                     div.append(div2);
-
-                    main.append(div);
+                    a.append(div);
+                    main.append(a);
 
                     function cardSetStyle() {
+                        a.href = "#";
+                        a.className = "cardhref"
                         div.className = "maincard";
                         img.src = "https://picsum.photos/200/200/?random=10";
+                        img.style.width = "50%";
                         img.style.height = "90%";
                         nav.style.flexDirection = "row";
                     }
