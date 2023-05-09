@@ -1,0 +1,38 @@
+body{
+    height: unset;
+}
+.main .main-wh{
+    width: 50%;
+    gap: 40px;
+}
+.main-wh input, textarea{
+    width: 100%;
+    background-color: #ecebeb;
+
+}
+.main-wh #title{
+    font-size: 16px;
+    padding: 6px 10px;
+}
+.main-wh #category{
+    width: 100px;
+    padding: 0 5px;
+    background-color: #ecebeb;
+}
+.main-wh #content, #gerent{
+    height: 200px;
+    font-size: 16px;
+    padding: 10px;
+    resize: none;
+}
+.main-wh .btn{
+    font-size: 20px;
+    width: 20%;
+    border-radius: 50px;
+    margin: 0 auto;
+}
+@media screen and (width < 768px) {
+    .main-wh .btn{
+        width: 120px;
+    }
+}
