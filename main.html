@@ -40,8 +40,8 @@
         <div class="main-wh">
             <nav>
                 <div class="search">
-                    <input class="form-control" type="text" placeholder="請輸入關鍵字">
-                    <button type="button" class="btn btn-secondary btn-sm">搜尋</button>
+                    <input id="hinge" class="form-control" type="text" placeholder="請輸入關鍵字">
+                    <button id="hingebtn" type="button" class="btn btn-secondary btn-sm">搜尋</button>
                 </div>
                 <div id="search-content">
 
@@ -75,29 +75,30 @@
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.4.js"
-        integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous"></script>
-
+        integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous">
+    </script>
+    <!--首頁_提案瀏覽-->
     <script>
         let url = "/propose.json";
-
+        //所有提案_Div
         let main = document.getElementById("proposal");
         window.onload = function () {
             requestJson();
-
         }
-        let ipadArray = [];
-        let num = 1;
-
+        let proposeArray = [];
+        let num = 1; //頁碼初始值
 
         let xhr = new XMLHttpRequest();
         function requestJson() {
             xhr.onload = function () {
-                ipadArray = this.response;
+                proposeArray = this.response;
 
-                ipadArray.forEach((item, index) => {
-                    if (index < 8*(num-1) || index >= 8*num) {
+                proposeArray.forEach((item, index) => {
+                    //不在num頁碼時，跳到下一個index
+                    if (index < 8 * (num - 1) || index >= 8 * num) {
                         return;
                     }
+
                     let a = document.createElement("a");
                     //card
                     let div = document.createElement("div");
@@ -121,13 +122,10 @@
                     p2.innerHTML = `留言數: ${item.message}`;
 
                     div.append(img);
-
                     div2.append(h3);
-
                     nav.append(p);
                     nav.append(p2);
                     div2.append(nav);
-
                     div.append(div2);
                     a.append(div);
                     main.append(a);
@@ -145,12 +143,13 @@
 
                 });
 
+                //Set頁碼
                 page();
-
                 function page() {
                     let div = document.createElement("div");
                     div.className = "page";
-                    for (var i = 0; i < Math.ceil(ipadArray.length / 8); i++) {
+                    //ceil無條件進位
+                    for (var i = 0; i < Math.ceil(proposeArray.length / 8); i++) {
                         let a = document.createElement("a");
                         a.className = "btn btn-link";
                         a.href = "#";
@@ -161,16 +160,15 @@
                     }
                     main.append(div);
                 }
-
-                for (var i = 0; i < Math.ceil(ipadArray.length / 8); i++) {
-                    
-                    let page = document.getElementById(`page${i+1}`);
+                //click頁碼
+                for (var i = 0; i < Math.ceil(proposeArray.length / 8); i++) {
+                    let page = document.getElementById(`page${i + 1}`);
                     // console.log(i);
-                    $(`#page${i+1}`).click(function(){
+                    $(`#page${i + 1}`).click(function () {
                         main.innerHTML = "";
                         requestJson();
                         num = page.innerText;
-                        console.log(num);
+                        // console.log(num);
                     })
                 }
             }
@@ -179,7 +177,67 @@
             xhr.send();
         }
     </script>
+    <!--搜尋-->
+    <script>
+        //搜尋結果_Div
+        let seach = document.getElementById("search-content");
 
+        $("#hingebtn").click(function () {
+            //初始
+            seach.style.padding = "unset";
+            seach.innerHTML = "";
+            // console.log(seach.innerHTML);
+            //搜尋Value_input
+            let hinge = document.getElementById("hinge").value;
+            // console.log(hinge);
+
+            let proposalArray = xhr.response;
+            //Set搜尋結果
+            for (var i = 0; i < proposalArray.length; i++) {
+                let a = document.createElement("a");
+                let e = proposalArray[i];
+                //是否包含value
+                let titleTure = e.title.toLowerCase().includes(hinge.toLowerCase());
+                let contentTure = e.content.toLowerCase().includes(hinge.toLowerCase());
+                let gerentTure = e.gerent.toLowerCase().includes(hinge.toLowerCase());
+                //搜尋是否空值
+                if (hinge == "") {
+
+                    alert("請輸入關鍵字!!");
+                    //結束迴圈
+                    throw new Error("");
+                }
+                else {
+                    //包含為Ture，則Set結果
+                    //都為Flase，則回傳"查無結果"
+                    if (titleTure) {
+                        setSeach();
+                    }
+                    else if (contentTure) {
+                        setSeach();
+                    }
+                    else if (gerentTure) {
+                        setSeach();
+                    }
+                    else if (!seach.innerText && i == (proposalArray.length - 1)) {
+                        seach.innerHTML = "<h1 style='color:red;text-align: center;'>**查無資料**</h1>";
+                        seach.style.padding = "10px";
+                    }
+                }
+                //搜尋結果
+                function setSeach() {
+                    a.href = "#";
+                    a.className = "btn btn-outline-dark";
+                    a.innerHTML = `提案:${e.title}<hr>
+                                內容:${e.content.substr(0, 40)}...<br>
+                                影響:${e.gerent.substr(0, 40)}...`;
+                    
+                    seach.append(a);
+                    seach.style.padding = "1.5% 2%";
+                }
+            }
+        });
+    </script>
 </body>
 
 </html>

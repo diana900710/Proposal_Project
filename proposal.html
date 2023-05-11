@@ -1,22 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+        integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
     <title>Document</title>
     <link rel="stylesheet" href="propose.css">
     <link rel="stylesheet" href="proposal.css">
 </head>
+
 <body>
     <input type="checkbox" id="meau-switch">
     <nav class="navbar sticky-top navbar-dark bg-dark">
         <!-- Navbar content -->
         <div>
             <a href="/main.html"><img src="https://picsum.photos/50/50/?random=10"></a>
-            <a href="/main.html"><h1>校園政策平台網</h1></a>
+            <a href="/main.html">
+                <h1>校園政策平台網</h1>
+            </a>
         </div>
 
         <label for="meau-switch" class="hb">
@@ -43,9 +48,11 @@
                     <option value="">--類別--</option>
                 </select>
                 <h5>輸入提案內容:</h5>
-                <textarea name="content" id="content" placeholder="輸入100字內" maxlength="100" cols="30" rows="10"></textarea>
+                <textarea name="content" id="content" placeholder="輸入限100字內" maxlength="100" cols="30"
+                    rows="10"></textarea>
                 <h5>輸入利益與影響:</h5>
-                <textarea name="gerent" id="gerent" placeholder="輸入100字內" maxlength="100" cols="30" rows="10"></textarea>
+                <textarea name="gerent" id="gerent" placeholder="輸入限100字內" maxlength="100" cols="30"
+                    rows="10"></textarea>
             </div>
             <button id="send" class="btn btn-primary">確認提案</button>
         </div>
@@ -75,29 +82,29 @@
     <script>
         //Category
         let categories = [
-            {id:"C001", name:"宿舍"},
-            {id:"C002", name:"餐廳"},
-            {id:"C003", name:"教室"},
-            {id:"C004", name:"校園"}
+            { id: "C001", name: "宿舍" },
+            { id: "C002", name: "餐廳" },
+            { id: "C003", name: "教室" },
+            { id: "C004", name: "校園" }
         ];
 
         let categoryDiv = document.getElementById("category");
 
-        window.onload = function(){
+        window.onload = function () {
             //Category的資料->設定select的選項
             setCategory();
         }
 
-        function setCategory(){
+        function setCategory() {
             categories.forEach((item, index) => {
                 let option = document.createElement("option");
                 option.value = item.id;
-                option.text = `${index+1}. ${item.name}`;
+                option.text = `${index + 1}. ${item.name}`;
                 categoryDiv.append(option);
             });
         }
         //送出proposal Product
-        $("#send").click(function(){
+        $("#send").click(function () {
             let title = document.getElementById("title").value;
             //select選擇的option
             let category = $("#category option:selected").val();
@@ -110,13 +117,13 @@
             //判斷option的value在array裡的name
             let categoryName;
             categories.forEach(item => {
-                if(item.id == category){
+                if (item.id == category) {
                     categoryName = item.name;
                 }
             });
 
             //沒有null則回傳並reset document
-            if(!isNull){
+            if (!isNull) {
                 alert(`標題：${title}\n類別：${categoryName}\n\r提案內容：\r${content}\n\n利益與影響：\r${gerent}`);
                 clear();
             }
@@ -124,33 +131,33 @@
         });
 
         //判斷是否有null
-        function ifIsNull(t, cate, c, g){
+        function ifIsNull(t, cate, c, g) {
             let warning = "請輸入";
-            if(!t){
-                warning+=" 提案標題";
+            if (!t) {
+                warning += " 提案標題";
             }
-            if(!c){
-                warning+=" 提案內容";
+            if (!c) {
+                warning += " 提案內容";
             }
-            if(!g){
-                warning+=" 利益與影響!";
+            if (!g) {
+                warning += " 利益與影響";
             }
-            if(!cate){
-                warning+=`\n請選擇類別!`;
+            if (!cate) {
+                warning += `\n請選擇類別`;
             }
-            
+
             // console.log(warning.length);
-            if(warning.length<=3){
+            if (warning.length <= 3) {
                 return false;
             }
-            else{
+            else {
                 alert(warning);
                 return true;
             }
         }
 
         //reset
-        function clear(){
+        function clear() {
             document.getElementById("title").value = "";
             //select的value為select中option:first的value
             $("#category").val($("#category").find('option:first').val());
@@ -159,4 +166,5 @@
         }
     </script>
 </body>
+
 </html>
