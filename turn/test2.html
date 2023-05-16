@@ -10,9 +10,9 @@
 <body>
     <a href="test.html" class="btn btn-primary">返回</a>
     <script>
-
         var url = location.href;
-        var temp = url.split("?").pop();
+        // url last URIcode -> string
+        var temp = decodeURI(url.split("?").pop());
         let p = document.createElement("h1");
         p.innerText = temp;
         document.body.append(p);

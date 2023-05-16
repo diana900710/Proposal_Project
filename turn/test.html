@@ -18,8 +18,8 @@
 
 <body>
     <div class="item">
-        <button id="yes" onclick="location.href='test2.html?yes'" class="btn btn-primary">贊成</button>
-        <button id="n" onclick="location.href='test2.html?no'" class="btn btn-primary">反對</button>
+        <button id="yes" class="btn btn-primary">贊成</button>
+        <button id="n" class="btn btn-primary">反對</button>
     </div>
     <p id="result"></p>
 
@@ -27,7 +27,8 @@
         let result = document.getElementById("result");
         console.log(result);
         $("button").click(function(e){
-            result.innerText = e.target.innerText;
+            // result.innerText = e.target.innerText;
+            location.href = `test2.html?${e.target.innerText}`;
         });
         
     </script>
