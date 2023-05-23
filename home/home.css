@@ -12,14 +12,12 @@ body{height: unset;}
     width: 60px;
 }
 .main #search-content{
-    /* height: 300px; */
     background-color: rgb(130, 255, 255);
     display: flex;
     flex-wrap: wrap;
 }
 .main #proposal{
-    /* flex-grow: 1; */
-    background-color: aquamarine;
+    background-color: rgb(130, 255, 255);
     display: flex;
     align-content: flex-start;
     flex-wrap: wrap;

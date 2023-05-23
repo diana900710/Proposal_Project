@@ -76,7 +76,7 @@
 
     <script src="https://code.jquery.com/jquery-3.6.4.js"
         integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous">
-    </script>
+        </script>
     <!--首頁_提案瀏覽-->
     <script>
         let url = "/home/propose.json";
@@ -92,96 +92,98 @@
         function requestJson() {
             xhr.onload = function () {
                 proposeArray = this.response;
-
-                proposeArray.forEach((item, index) => {
-                    //不在num頁碼時，跳到下一個index
-                    if (index < 8 * (num - 1) || index >= 8 * num) {
-                        return;
-                    }
-
-                    let a = document.createElement("a");
-                    //card
-                    let div = document.createElement("div");
-                    //card-content
-                    let div2 = document.createElement("div");
-                    //card-icon
-                    let img = document.createElement("img");
-                    //card-title
-                    let h3 = document.createElement("h3");
-                    //contect-nav
-                    let nav = document.createElement("nav");
-                    //agree
-                    let p = document.createElement("p");
-                    //message
-                    let p2 = document.createElement("p");
-
-                    cardSetStyle(); //card-Set style
-
-                    h3.innerHTML = `<h3>${item.title}</h3>`;
-                    p.innerHTML = `同意數: ${item.agree}`;
-                    p2.innerHTML = `留言數: ${item.message}`;
-
-                    div.append(img);
-                    div2.append(h3);
-                    nav.append(p);
-                    nav.append(p2);
-                    div2.append(nav);
-                    div.append(div2);
-                    a.append(div);
-                    main.append(a);
-
-                    function cardSetStyle() {
-                        //跳轉-提案
-                        a.href = `/initial.html?${item.title}`;
-                        a.className = "cardhref"
-                        div.className = "maincard";
-                        img.src = "https://picsum.photos/200/200/?random=10";
-                        img.style.width = "50%";
-                        img.style.height = "90%";
-                        nav.style.flexDirection = "row";
-                    }
-
-
-                });
-
+                //Create Proposal_Card
+                create();
                 //Set頁碼
                 page();
-                function page() {
-                    let div = document.createElement("div");
-                    div.className = "page";
-                    let ul = document.createElement("ul");
-                    ul.className = "pagination";
-
-                    //ceil無條件進位
-                    for (var i = 0; i < Math.ceil(proposeArray.length / 8); i++) {
-                        let li = document.createElement("li");
-                        li.className = "page-item";
-                        let a = document.createElement("a");
-                        a.className = "page-link";
-                        a.innerText = i + 1;
-                        a.id = `page${i + 1}`;
-                        li.append(a);
-                        ul.append(li);
-
-                    }
-                    div.append(ul);
-                    main.append(div);
-                }
                 //click頁碼
-                for (var i = 0; i < Math.ceil(proposeArray.length / 8); i++) {
-                    let page = document.getElementById(`page${i + 1}`);
-                    // console.log(i);
-                    $(`#page${i + 1}`).click(function () {
-                        main.innerHTML = "";
-                        requestJson();
-                        num = page.innerText;
-                        // console.log(num);
-                    })
-                }
+                pageClick();
             }
             xhr.open("GET", url);
             xhr.responseType = "json";
             xhr.send();
+        }
+        function create() {
+            proposeArray.forEach((item, index) => {
+                //不在num頁碼時，跳到下一個index
+                if (index < 8 * (num - 1) || index >= 8 * num) {
+                    return;
+                }
+
+                let a = document.createElement("a");
+                //card
+                let div = document.createElement("div");
+                //card-content
+                let div2 = document.createElement("div");
+                //card-icon
+                let img = document.createElement("img");
+                //card-title
+                let h3 = document.createElement("h3");
+                //contect-nav
+                let nav = document.createElement("nav");
+                //agree
+                let p = document.createElement("p");
+                //message
+                let p2 = document.createElement("p");
+
+                cardSetStyle(); //card-Set style
+
+                h3.innerHTML = `<h3>${item.title}</h3>`;
+                p.innerHTML = `同意數: ${item.agree}`;
+                p2.innerHTML = `留言數: ${item.message}`;
+
+                div.append(img);
+                div2.append(h3);
+                nav.append(p);
+                nav.append(p2);
+                div2.append(nav);
+                div.append(div2);
+                a.append(div);
+                main.append(a);
+
+                function cardSetStyle() {
+                    //跳轉-提案
+                    a.href = `/initial.html?${item.Id}`;
+                    a.className = "cardhref"
+                    div.className = "maincard";
+                    img.src = "https://picsum.photos/200/200/?random=10";
+                    img.style.width = "50%";
+                    img.style.height = "90%";
+                    nav.style.flexDirection = "row";
+                }
+            });
+        }
+        function page() {
+            let div = document.createElement("div");
+            div.className = "page";
+            let ul = document.createElement("ul");
+            ul.className = "pagination";
+
+            //ceil無條件進位
+            for (var i = 0; i < Math.ceil(proposeArray.length / 8); i++) {
+                let li = document.createElement("li");
+                li.className = "page-item";
+                let a = document.createElement("a");
+                a.className = "page-link";
+                a.innerText = i + 1;
+                a.id = `page${i + 1}`;
+                li.append(a);
+                ul.append(li);
+            }
+            div.append(ul);
+            main.append(div);
+        }
+        function pageClick() {
+            for (var i = 0; i < Math.ceil(proposeArray.length / 8); i++) {
+                let page = document.getElementById(`page${i + 1}`);
+                // console.log(i);
+                $(`#page${i + 1}`).click(function () {
+                    main.innerHTML = "";
+                    requestJson();
+                    num = page.innerText;
+                    // console.log(num);
+                })
+            }
         }
     </script>
     <!--搜尋-->
@@ -209,7 +211,6 @@
                 let gerentTure = e.gerent.toLowerCase().includes(hinge.toLowerCase());
                 //搜尋是否空值
                 if (hinge == "") {
-
                     alert("請輸入關鍵字!!");
                     //結束迴圈
                     throw new Error("");
@@ -238,7 +239,7 @@
                     a.innerHTML = `提案:${e.title}<hr>
                                 內容:${e.content.substr(0, 40)}...<br>
                                 影響:${e.gerent.substr(0, 40)}...`;
-                    
+
                     seach.append(a);
                     seach.style.padding = "1.5% 2%";
                 }
