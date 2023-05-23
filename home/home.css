@@ -1,0 +1,94 @@
+body{height: unset;}
+.main-wh nav{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.main .search{
+    display: flex;
+    justify-content: center;
+}
+.main .search button{
+    width: 60px;
+}
+.main #search-content{
+    /* height: 300px; */
+    background-color: rgb(130, 255, 255);
+    display: flex;
+    flex-wrap: wrap;
+}
+.main #proposal{
+    /* flex-grow: 1; */
+    background-color: aquamarine;
+    display: flex;
+    align-content: flex-start;
+    flex-wrap: wrap;
+}
+#proposal .maincard{
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+    padding: 0 20px;
+    gap: 20px;
+    
+    height: 230px;
+}
+#proposal .cardhref{
+    color: #000;
+    width: 50%;
+}
+.maincard div{
+    flex-grow: 1;
+}
+.page{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+.page a{
+    font-size: 20px;
+}
+.page-link{
+    background-color: unset;
+    border-color: #000;
+    color: #000;
+}
+.page-link:hover{
+    background-color: #fff5;
+    color: #000;
+}
+#search-content{
+    /* padding: 10px; */
+    gap: 15px;
+    justify-content: space-between;
+}
+#search-content a{
+    width: 49%;
+    font-size: 20px;
+    font-weight: 500;
+}
+
+
+@media screen and (width < 768px) {
+    #proposal .cardhref{
+        width: 100%;
+        justify-content: center;
+    }
+    .maincard div{
+        flex-grow: unset;
+    }
+    .maincard img{
+        width: unset;
+        height: 90%;
+    }
+}
+@media screen and (width < 1194px){
+    #search-content a{
+        width: 100%;
+    }
+    #search-content a:nth-child(odd){
+        margin-right: 10px;
+    }
+}

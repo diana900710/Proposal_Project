@@ -1,4 +1,11 @@
 body{height: unset;}
+body .main{flex-grow: unset;}
+.container{
+    background-color: burlywood;
+    width: 30%;
+    text-align: center;
+
+}
 .main-wh nav{
     display: flex;
     flex-direction: column;
@@ -19,7 +26,7 @@ body{height: unset;}
 }
 .main #proposal{
     /* flex-grow: 1; */
-    background-color: aquamarine;
+    background-color: rgb(160, 196, 184);
     display: flex;
     align-content: flex-start;
     flex-wrap: wrap;
@@ -83,3 +90,7 @@ body{height: unset;}
         margin-right: 10px;
     }
 }
+/* img{
+    border-radius : 1em 4em 1em 4em;
+    -moz-border-radius: 1em 4em 1em 4em;
+} */

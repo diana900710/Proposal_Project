@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+        integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <title>管理員-待處理案件</title>
+    <link rel="stylesheet" href="/propose.css">
+    <link rel="stylesheet" href="./css/propose_gerentcaes.css">
+</head>
+
+<body>
+    <input type="checkbox" id="meau-switch">
+    <nav class="navbar sticky-top navbar-dark bg-dark">
+        <!-- Navbar content -->
+        <div>
+            <a href="/home/main.html"><img src="https://picsum.photos/50/50/?random=10"></a>
+            <a href="/home/main.html">
+                <h1>校園政策平台網</h1>
+            </a>
+        </div>
+
+        <label for="meau-switch" class="hb">
+            <span></span>
+            <span></span>
+            <span></span>
+        </label>
+        <div class="main-nav">
+            <a class="btn btn-primary" href="/home/main.html" role="button">首頁</a>
+            <a class="btn btn-primary" href="/proposal/proposal.html" role="button">提案</a>
+            <a class="btn btn-primary" href="/usesupervision/usesupervision.html" role="button">監督</a>
+            <a class="btn btn-primary" href="/makevarious/makevarious.html" role="button">各處室</a>
+        </div>
+    </nav>
+
+    <div class="main">
+        <div class="main-wh">
+            <div class="container">
+                <h3>待處理案件</h3>
+            </div>
+            <div id="proposal">
+            </div>
+        </div>
+    </div>
+
+    <div class="end">
+        <div class="tal">
+            <div>
+                <h4>聯絡資訊</h4>
+                <h5>
+                    30012 新竹市香山區五福路二段707號<br>
+                    707, Sec.2, WuFu Rd., Hsinchu, Taiwan 30012, R.O.C. 電話：03-5374281~5 傳真：03-5373771
+                </h5>
+            </div>
+            <div>
+                <h4>緊急聯絡</h4>
+                <h5>
+                    校園安全專線：0972590728 (全日)<br>
+                    學生宿舍專線：03-5376000,<br>03-5375015
+                </h5>
+            </div>
+        </div>
+        <div class="a">上半部超連結</div>
+        <div class="a"><!--往網站介紹連結--></div>
+    </div>
+</body>
+
+<script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
+    crossorigin="anonymous">
+    </script>
+
+<script>
+    let url = "./json/propose_gerentcase.json";
+    let main = document.getElementById("proposal");
+    let proposeArray = [];
+    let isTrueProposeArray = [];
+    let num = 1; // Initial page number
+
+    let xhr = new XMLHttpRequest();
+    window.onload = function () {
+        requestJson();
+    };
+
+    // 取得JSON資料呼叫後續程式
+    function requestJson() {   
+        xhr.onload = function () {
+            proposeArray = this.response;
+            filterProposeArray();
+            renderProposals();
+            renderPagination();
+            addPageClickListeners();
+        };
+
+        xhr.open("GET", url);
+        xhr.responseType = "json";
+        xhr.send();
+    }
+    //過濾原始資料
+    function filterProposeArray() {
+        if (isTrueProposeArray.length === 0) {
+            proposeArray.forEach(item => {
+                if (item.Pass === "true") {
+                    isTrueProposeArray.push(item);
+                }
+            });
+        }
+    }
+    //載入資料生成card
+    function renderProposals() {
+        isTrueProposeArray.forEach((item, index) => {
+            if (index < 8 * (num - 1) || index >= 8 * num) {
+                return;
+            }
+
+            let a = document.createElement("a");
+            let div = document.createElement("div");
+            let div2 = document.createElement("div");
+            let img = document.createElement("img");
+            let h3 = document.createElement("h3");
+            let nav = document.createElement("nav");
+
+            cardSetStyle();
+
+            h3.innerHTML = `<h3>${item.title}</h3>`;
+            div.append(img);
+            div2.append(h3);
+            div2.append(nav);
+            div.append(div2);
+            a.append(div);
+            main.append(a);
+
+            function cardSetStyle() {
+                a.href = `?${item.title}`;
+                a.className = "cardhref"
+                div.className = "maincard";
+                img.src = "https://picsum.photos/200/200/?random=10";
+                img.style.width = "50%";
+                img.style.height = "90%";
+                nav.style.flexDirection = "row";
+            }
+        });
+    }
+    //分頁
+    function renderPagination() {
+        let div = document.createElement("div");
+        div.className = "page";
+        for (let i = 0; i < Math.ceil(isTrueProposeArray.length / 8); i++) {
+            let a = document.createElement("a");
+            a.className = "btn btn-link";
+            a.innerText = i + 1;
+            a.id = `page${i + 1}`;
+            div.append(a);
+        }
+        main.append(div);
+    }
+    //更新分頁
+    function addPageClickListeners() {
+        for (let i = 0; i < Math.ceil(isTrueProposeArray.length / 8); i++) {
+            let page = document.getElementById(`page${i + 1}`);
+            $(`#page${i + 1}`).click(function () {
+                main.innerHTML = "";
+                num = page.innerText;
+                requestJson();
+            });
+        }
+    }
+</script>
+
+
+</html>
